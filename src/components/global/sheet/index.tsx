@@ -9,13 +9,16 @@ type Props = {
   trigger: React.ReactNode;
   children: React.ReactNode;
   className?: string;
+  side: "left" | "right";
 };
 
-const CustomSheet = ({ trigger, children, className }: Props) => {
+const CustomSheet = ({ trigger, children, className, side }: Props) => {
   return (
     <ShadcnSheet>
       <SheetTrigger className={className}>{trigger}</SheetTrigger>
-      <SheetContent>{children}</SheetContent>
+      <SheetContent side={side} className="p-0">
+        {children}
+      </SheetContent>
     </ShadcnSheet>
   );
 };

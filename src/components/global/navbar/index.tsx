@@ -11,6 +11,10 @@ import ClerkAuthState from "../clerk-auth-state";
 import { HelpDuoToneWhite } from "@/icons";
 import { SubscriptionPlan } from "../subscription-plan";
 import UpgradeCard from "../sidebar/upgrade";
+import CreateAutomationButton from "../create-automation-button";
+import Search from "../search";
+import Notifications from "./notifications";
+import MainBreadCrumb from "../bread-crumbs/main-bread-crumb";
 
 type Props = {
   slug: string;
@@ -24,7 +28,7 @@ const Navbar = ({ slug }: Props) => {
       <div className="flex flex-col">
         <div className="flex gap-x-3 lg:gap-x-5 justify-end">
           <span className="lg:hidden flex items-center flex-1 gap-x-2">
-            <CustomSheet trigger={<Menu />} className="lg:hidden">
+            <CustomSheet side="left" trigger={<Menu />} className="lg:hidden">
               <div className="flex flex-col gap-y-5 w-full h-full p-3 bg-[#0e0e0e] bg-opacity-90 bg-clip-padding backdrop-filter backdrop--blur-safari backdrop-blur-3xl">
                 <div className="flex gap-x-2 items-center p-5 justify-center">
                   <LogoSmall />
@@ -48,7 +52,7 @@ const Navbar = ({ slug }: Props) => {
                     <p className="text-[#9B9CA0]">Help</p>
                   </div>
                 </div>
-                <SubscriptionPlan>
+                <SubscriptionPlan type="FREE">
                   <div className="flex-1 flex flex-col justify-end">
                     <UpgradeCard />
                   </div>
@@ -56,7 +60,11 @@ const Navbar = ({ slug }: Props) => {
               </div>
             </CustomSheet>
           </span>
+          <Search />
+          <CreateAutomationButton />
+          <Notifications />
         </div>
+        <MainBreadCrumb page={page === slug ? "Home" : page} slug={slug} />
       </div>
     )
   );
