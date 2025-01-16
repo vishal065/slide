@@ -21,7 +21,8 @@ export const onBoardUser = async () => {
       if (existingUser.Integrations.length > 0) {
         const today = new Date();
         const time_left =
-          existingUser.Integrations[0]?.expireAt?.getTime()! - today.getTime();
+          (existingUser.Integrations[0].expireAt?.getTime() as number) -
+          today.getTime();
         const days = Math.round(time_left / (1000 * 3600 * 24));
         if (days < 5) {
           const refresh = await refreshToken(
@@ -32,7 +33,7 @@ export const onBoardUser = async () => {
           const update_token = await upateIntegration(
             existingUser.Integrations[0].id,
             refresh.access_token,
-            new Date()
+            new Date(expireAt)
           );
           if (!update_token) {
             console.log("update token failed");
@@ -47,8 +48,30 @@ export const onBoardUser = async () => {
         },
       };
     }
-    const created = await createUser();
+    const created = await createUser(
+      user.id,
+      user.firstName as string,
+      user.lastName as string,
+      user.emailAddresses[0].emailAddress
+    );
+    return { status: 201, data: created };
   } catch (error) {
     console.error(error);
+    return { status: 500 };
   }
 };
+
+export const onUserInfo = async () => {
+  const user = await onCurrentUser();
+  try {
+    const profile = await findUser(user.id);
+    if (profile) return { status: 200, data: profile };
+    return { status: 404 };
+  } catch (error) {
+    console.error(error);
+    return { status: 500 };
+  }
+};
+
+
+

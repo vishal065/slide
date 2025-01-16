@@ -1,7 +1,6 @@
 import AutomationList from "@/components/global/automation-list";
 import CreateAutomationButton from "@/components/global/create-automation-button";
 import { Check } from "lucide-react";
-import React from "react";
 
 type Props = {};
 

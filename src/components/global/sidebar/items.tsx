@@ -21,7 +21,10 @@ const Items = ({ page, slug }: Props) => {
           ? `bg-[#0f0f0f]`
           : "text-[#9B9CA0]"
       )}
-    ></Link>
+    >
+      {item.icon}
+      {item.label}
+    </Link>
   ));
 };
 
