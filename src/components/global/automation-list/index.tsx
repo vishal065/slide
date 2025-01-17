@@ -1,5 +1,4 @@
 "use client";
-
 import { usePaths } from "@/hooks/use-paths";
 import { cn, getMonth } from "@/lib/utils";
 import Link from "next/link";
@@ -7,6 +6,8 @@ import GradientButton from "../gradient-button";
 import { Button } from "@/components/ui/button";
 import { useQueryAutomations } from "@/hooks/use-query";
 import CreateAutomationButton from "../create-automation-button";
+import { useMutationDataState } from "@/hooks/use-mutation-data";
+import { useMemo } from "react";
 
 type Props = {};
 
@@ -15,9 +16,20 @@ const AutomationList = (props: Props) => {
 
   const { data } = useQueryAutomations();
 
-  const {} = useMutationDataState(["create-automation"]);
+  const { latestVariable } = useMutationDataState(["create-automation"]);
 
   const { pathname } = usePaths();
+
+  const optimisticUiData = useMemo(() => {
+    if (latestVariable?.variables) {
+      const latestData = [latestVariable.variables, ...data.data];
+      return { data: latestData };
+    }
+  }, [latestVariable, data]);
+
+  console.log("optimisticUiData", optimisticUiData);
+  console.log("data", data);
+  console.log("latestVariable", latestVariable);
 
   if (data?.status !== 200 || data.data.length <= 0) {
     return (
@@ -30,17 +42,18 @@ const AutomationList = (props: Props) => {
 
   return (
     <div className="flex flex-col gap-y-3 ">
-      {data.data.map((automation) => (
+      {optimisticUiData?.data?.map((automation) => (
         <Link
-          key={automation.id}
-          href={`${pathname}/${automation.id}`}
+          key={automation?.id}
+          href={`${pathname}/${automation?.id}`}
           className="bg-[#1D1D1D] hover:opacity-80 transation duration-100 rounded-xl p-5 border-[1px] radial--gradient--automations flex border-[#545454]"
         >
           <div className="flex flex-col flex-1 items-start">
-            <h2 className="text-xl font-semibold">{automation.name}</h2>
+            <h2 className="text-xl font-semibold">{automation?.name}</h2>
             <p className="text-[#9B9CA0] text-sm font-light mb-2"></p>
             {/* Automation keywords */}
-            {automation.Keywords.length > 0 ? (
+
+            {automation?.Keywords?.length > 0 ? (
               <div className="flex gap-x-2 flex-wrap mt-3">
                 <div
                   className={cn(
@@ -66,13 +79,13 @@ const AutomationList = (props: Props) => {
           </div>
           <div className="flex flex-col justify-between">
             <p className=" capitalize text-sm font-light text-[#9B9CA0]">
-              {getMonth(automation.createdAt.getUTCMonth() + 1)}{" "}
-              {automation.createdAt.getUTCDate() === 1
+              {getMonth(automation?.createdAt.getUTCMonth() + 1)}{" "}
+              {automation?.createdAt.getUTCDate() === 1
                 ? `${automation.createdAt.getUTCDate()}st`
                 : `${automation.createdAt.getUTCDate()}th`}{" "}
               {automation.createdAt.getUTCFullYear()}
             </p>
-            {automation.listner?.listener === "SMARTAI" ? (
+            {automation?.listner?.listener === "SMARTAI" ? (
               <GradientButton
                 type="BUTTON"
                 className="w-full bg-background-80 text-white hover:bg-background-80"

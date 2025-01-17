@@ -72,6 +72,3 @@ export const onUserInfo = async () => {
     return { status: 500 };
   }
 };
-
-
-

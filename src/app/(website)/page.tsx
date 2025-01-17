@@ -112,7 +112,7 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 md:gap-8">
-            {plans.map((plan, index) => (
+            {plans?.map((plan, index) => (
               <Card key={index} className="flex flex-col justify-between">
                 <CardHeader>
                   <CardTitle>{plan.name}</CardTitle>
@@ -126,7 +126,7 @@ export default function Home() {
                     </span>
                   </div>
                   <ul className="space-y-2">
-                    {plan.features.map((feature, i) => (
+                    {plan.features?.map((feature, i) => (
                       <li key={i} className="flex items-center">
                         <CheckCircle className="mr-2 h-4 w-4 text-primary" />
                         <span className="text-sm text-muted-foreground">

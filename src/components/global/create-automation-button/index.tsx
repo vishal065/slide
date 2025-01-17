@@ -3,16 +3,26 @@ import { Button } from "@/components/ui/button";
 import Loader from "../loader";
 import { AutomationDuoToneWhite } from "@/icons";
 import { useCreateAutomation } from "@/hooks/use-automations";
+import { v4 } from "uuid";
+import { useMemo } from "react";
 
 type Props = {};
 
 const CreateAutomationButton = (props: Props) => {
   // WIP : Create an automation in the database using mutate
-  const { isPending, mutate } = useCreateAutomation();
+  const mutationId = useMemo(() => v4(), []);
+  const { mutate, isPending } = useCreateAutomation(mutationId);
   return (
     <Button
       className="lg:px-10 py-6 bg-gradient-to-br hover:opacity-80 text-white rounded-full font-medium from-[#3352CC] to-[#1C2D70]"
-      onClick={mutate}
+      onClick={() =>
+        mutate({
+          name: "testing123",
+          id: mutationId,
+          createdAt: new Date(),
+          Keywords: [],
+        })
+      }
     >
       <Loader state={isPending}>
         <AutomationDuoToneWhite />
