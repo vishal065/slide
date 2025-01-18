@@ -10,17 +10,15 @@ type Props = {};
 
 const CreateAutomationButton = (props: Props) => {
   // WIP : Create an automation in the database using mutate
-  const mutationId = useMemo(() => v4(), []);
-  const { mutate, isPending } = useCreateAutomation(mutationId);
+  // const mutationId = v4();
+  const { mutate, isPending } = useCreateAutomation();
   return (
     <Button
       className="lg:px-10 py-6 bg-gradient-to-br hover:opacity-80 text-white rounded-full font-medium from-[#3352CC] to-[#1C2D70]"
       onClick={() =>
         mutate({
-          name: "testing123",
-          id: mutationId,
-          createdAt: new Date(),
-          Keywords: [],
+          name: "vishal",
+          Keywords: ["getstarted"],
         })
       }
     >

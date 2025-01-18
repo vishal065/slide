@@ -2,19 +2,33 @@
 
 import { client } from "@/lib/prisma";
 
-export const createAutomation = async (clerkId: string, id?: string) => {
-  return await client.user.update({
-    where: {
-      clerkId,
-    },
-    data: {
-      automations: {
-        create: {
-          ...(id && { id }),
+export const createAutomation = async (clerkId: string, data) => {
+  try {
+    console.log("before insrted in db", data);
+
+    const abc = await client.user.update({
+      where: {
+        clerkId,
+      },
+      data: {
+        automations: {
+          create: {
+            name: data.name,
+            Keywords: {
+              create: data.Keywords.map((word: string) => ({
+                word: word,
+              })),
+            },
+          },
         },
       },
-    },
-  });
+    });
+    console.log("before retrurn from db", abc);
+
+    return abc;
+  } catch (error) {
+    console.log("databaseError", error);
+  }
 };
 
 export const getAutomations = async (clerkId: string) => {

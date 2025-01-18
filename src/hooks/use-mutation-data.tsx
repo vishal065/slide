@@ -35,13 +35,14 @@ export const useMutationDataState = (mutationKey: MutationKey) => {
   const data = useMutationState({
     filters: { mutationKey },
     select: (mutation) => {
+      console.log("Mutation state:", mutation); // Log the mutation state for debugging
       return {
         variables: mutation.state.variables as any,
         status: mutation.state.status,
       };
     },
   });
-
+  console.log("Mutation data:", data); // Log the data to ensure it's being returned
   const latestVariable = data[data.length - 1];
   return { latestVariable };
 };

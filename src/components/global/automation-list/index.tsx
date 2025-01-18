@@ -21,15 +21,18 @@ const AutomationList = (props: Props) => {
   const { pathname } = usePaths();
 
   const optimisticUiData = useMemo(() => {
-    if (latestVariable?.variables) {
+    console.log(latestVariable);
+    if (latestVariable?.variables && latestVariable?.status === "success") {
+      return data;
+    }
+
+    if (latestVariable?.variables && latestVariable?.status !== "error") {
       const latestData = [latestVariable.variables, ...data.data];
       return { data: latestData };
     }
-  }, [latestVariable, data]);
 
-  console.log("optimisticUiData", optimisticUiData);
-  console.log("data", data);
-  console.log("latestVariable", latestVariable);
+    return data;
+  }, [latestVariable, data]);
 
   if (data?.status !== 200 || data.data.length <= 0) {
     return (
@@ -79,11 +82,12 @@ const AutomationList = (props: Props) => {
           </div>
           <div className="flex flex-col justify-between">
             <p className=" capitalize text-sm font-light text-[#9B9CA0]">
-              {getMonth(automation?.createdAt.getUTCMonth() + 1)}{" "}
-              {automation?.createdAt.getUTCDate() === 1
-                ? `${automation.createdAt.getUTCDate()}st`
-                : `${automation.createdAt.getUTCDate()}th`}{" "}
-              {automation.createdAt.getUTCFullYear()}
+              {automation?.createdAt &&
+                `${getMonth(automation?.createdAt.getUTCMonth() + 1)} ${
+                  automation?.createdAt.getUTCDate() === 1
+                    ? `${automation?.createdAt.getUTCDate()}st`
+                    : `${automation?.createdAt.getUTCDate()}th`
+                } ${automation?.createdAt.getUTCFullYear()}`}
             </p>
             {automation?.listner?.listener === "SMARTAI" ? (
               <GradientButton

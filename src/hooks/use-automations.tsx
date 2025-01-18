@@ -2,10 +2,10 @@ import { createAutomations, updateAutomationName } from "@/actions/automations";
 import { useMutationData } from "./use-mutation-data";
 import { useEffect, useRef, useState } from "react";
 
-export const useCreateAutomation = (id?: string) => {
+export const useCreateAutomation = () => {
   const { mutate, isPending } = useMutationData(
     ["create-automation"],
-    () => createAutomations(id),
+    (mutationData) => createAutomations(mutationData),
     "user-automations"
   );
   return { mutate, isPending };

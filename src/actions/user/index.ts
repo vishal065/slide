@@ -36,7 +36,7 @@ export const onBoardUser = async () => {
             new Date(expireAt)
           );
           if (!update_token) {
-            console.log("update token failed");
+            console.error("update token failed");
           }
         }
       }
