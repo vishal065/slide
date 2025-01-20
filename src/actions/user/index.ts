@@ -15,13 +15,17 @@ export const onCurrentUser = async () => {
 export const onBoardUser = async () => {
   const user = await onCurrentUser();
   try {
-    const existingUser = await findUser(user.id);
+    // console.log("user is ", user);
+    console.log("user id is ", user.id);
+
+    const existingUser = await findUser(user?.id);
+    console.log("existingUser is ", existingUser);
     if (existingUser) {
       //when we integrating the user insta account there something call refresh access token and this token will always refresh based on certain span of time for this case we do for 5 days
-      if (existingUser.Integrations.length > 0) {
+      if (existingUser?.Integrations?.length > 0) {
         const today = new Date();
         const time_left =
-          (existingUser.Integrations[0].expireAt?.getTime() as number) -
+          (existingUser?.Integrations[0].expireAt?.getTime() as number) -
           today.getTime();
         const days = Math.round(time_left / (1000 * 3600 * 24));
         if (days < 5) {
@@ -56,7 +60,7 @@ export const onBoardUser = async () => {
     );
     return { status: 201, data: created };
   } catch (error) {
-    console.error(error);
+    console.error("error is", error);
     return { status: 500 };
   }
 };

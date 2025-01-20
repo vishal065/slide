@@ -2,6 +2,7 @@
 
 import { onCurrentUser } from "../user";
 import {
+  addListner,
   createAutomation,
   findAutomation,
   getAutomations,
@@ -63,5 +64,22 @@ export const updateAutomationName = async (
   } catch (error) {
     console.error(error);
     return { status: 500, data: "something went wrong" };
+  }
+};
+
+export const saveListner = async (
+  automationId: string,
+  listener: "SMARTAI" | "MESSAGE",
+  prompt: string,
+  reply: string
+) => {
+  await onCurrentUser();
+  try {
+    const create = await addListner(automationId, listener, prompt, reply);
+    if (create) return { status: 200, data: "Listener Created" };
+    return { status: 200, data: "Failed to create listner" };
+  } catch (error) {
+    console.error(error);
+    return { status: 200, data: "Something went wrong" };
   }
 };

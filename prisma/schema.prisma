@@ -34,7 +34,7 @@ model Subscription {
 //Integrations is an social media account (instagram)
 model Integrations {
   id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId      String?      @db.Uuid
+  userId      String       @db.Uuid
   instagramId String?      @unique
   name        INTEGRATIONS @default(INSTAGRAM)
   token       String       @unique

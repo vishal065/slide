@@ -44,7 +44,10 @@ const AutomationBreadCrumb = ({ id }: Props) => {
           {edit ? (
             <></>
           ) : (
-            <span className=" cursor-pointer hover:opacity-75 duration-100 transition flex-shrink-0 mr-4">
+            <span
+              className=" cursor-pointer hover:opacity-75 duration-100 transition flex-shrink-0 mr-4"
+              onClick={enableEdit}
+            >
               <PencilIcon size={14} />
             </span>
           )}

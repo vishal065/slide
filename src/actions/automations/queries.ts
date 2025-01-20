@@ -74,3 +74,26 @@ export const updateAutomation = async (
     data: { name: update.name, active: update.active },
   });
 };
+
+export const addListner = async (
+  automationId: string,
+  listener: "SMARTAI" | "MESSAGE",
+  prompt: string,
+  reply?: string
+) => {
+  return await client.automation.update({
+    where: {
+      id: automationId,
+    },
+    data: {
+      listner: {
+        create: {
+          listener,
+          prompt,
+          commentReply: reply,
+        },
+        
+      },
+    },
+  });
+};
