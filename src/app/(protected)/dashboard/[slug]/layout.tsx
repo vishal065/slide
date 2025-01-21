@@ -21,8 +21,6 @@ const Layout = async ({ children, params }: Props) => {
 
   const query = new QueryClient();
 
-  console.log("layout params", params);
-
   await preFetchUserProfile(query);
 
   await preFetchUserAutomations(query);

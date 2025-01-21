@@ -15,7 +15,7 @@ export const useMutationData = (
   onSuccess?: () => void
 ) => {
   const client = useQueryClient();
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending } = useMutation({ 
     mutationKey,
     mutationFn,
     onSuccess: (data) => {

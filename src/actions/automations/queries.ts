@@ -1,6 +1,7 @@
 "use server";
 
 import { client } from "@/lib/prisma";
+import { TRIGGER_TYPE } from "@prisma/client";
 
 export const createAutomation = async (clerkId: string, data) => {
   try {
@@ -92,7 +93,38 @@ export const addListner = async (
           prompt,
           commentReply: reply,
         },
-        
+      },
+    },
+  });
+};
+
+export const addTrigger = async (automationId: string, trigger: string[]) => {
+  if (trigger.length === 2) {
+    return await client.automation.update({
+      where: {
+        id: automationId,
+      },
+      data: {
+        trigger: {
+          createMany: {
+            data: [
+              { type: trigger[0] as "COMMENT" | "DM" },
+              { type: trigger[1] as "COMMENT" | "DM" },
+            ],
+          },
+        },
+      },
+    });
+  }
+  return await client.automation.update({
+    where: {
+      id: automationId,
+    },
+    data: {
+      trigger: {
+        create: {
+          type: trigger[0] as "COMMENT" | "DM",
+        },
       },
     },
   });
