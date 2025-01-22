@@ -2,9 +2,12 @@
 
 import { onCurrentUser } from "../user";
 import {
+  addKeyWord,
   addListner,
+  addPost,
   addTrigger,
   createAutomation,
+  deleteKeywordQuery,
   findAutomation,
   getAutomations,
   updateAutomation,
@@ -95,5 +98,83 @@ export const saveTrigger = async (automationId: string, trigger: string[]) => {
     console.error(error);
 
     return { status: 500, data: "something went wrong" };
+  }
+};
+
+export const saveKeyword = async (automationId: string, keyword: string) => {
+  await onCurrentUser();
+  try {
+    const create = await addKeyWord(automationId, keyword);
+    if (create) return { status: 200, data: "Keyword added successfully" };
+    return { status: 404, data: "Cannot add keyword" };
+  } catch (error) {
+    console.error(error);
+    return { status: 500, data: "Something went wrong" };
+  }
+};
+
+export const deleteKeyword = async (id: string) => {
+  await onCurrentUser();
+  try {
+    const deleted = await deleteKeywordQuery(id);
+    if (deleted) return { status: 200, data: "Keyword deleted" };
+    return { status: 404, data: "Keyword not deleted" };
+  } catch (error) {
+    console.error(error);
+    return { status: 500, data: "Something went wrong" };
+  }
+};
+
+export const getProfiePosts = async () => {
+  const user = await onCurrentUser();
+  try {
+    const profile = await findUser(user.id);
+    const posts = await fetch(
+      `${process.env.INSTAGRAM_BASE_URL}/me/media?fields=id,caption,media_url,media_type,timestamp&limit=10&access_token=${profile?.Integrations[0].token}`
+    );
+
+    const parsed = await posts.json();
+    if (parsed) return { status: 200, data: parsed };
+    return { status: 404 };
+  } catch (error) {
+    console.error(error, "Server side error in getting post");
+    return { status: 500 };
+  }
+};
+
+export const savePosts = async (
+  automationId: string,
+  posts: {
+    postid: string;
+    caption?: string;
+    media: string;
+    mediaType: "IMAGE" | "VIDEO" | "CAROSEL_ALBUM";
+  }
+) => {
+  await onCurrentUser();
+  try {
+    const create = await addPost(automationId, posts);
+    if (create) return { status: 200, data: "posts attached" };
+    return { status: 404, data: "Automation not found" };
+  } catch (error) {
+    console.error(error);
+    return { status: 500, data: "Something went wrong" };
+  }
+};
+
+export const activateAutomation = async (id: string, state: boolean) => {
+  await onCurrentUser();
+  try {
+    const update = await updateAutomation(id, { active: state });
+    if (update)
+      return {
+        status: 200,
+        data: `Automation ${state ? "activated" : "disabled"}`,
+      };
+    return { status: 404, data: "Automation not found" };
+  } catch (error) {
+    console.error(error);
+
+    return { status: 500, data: "Something went wrong" };
   }
 };
