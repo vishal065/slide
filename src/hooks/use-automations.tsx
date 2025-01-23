@@ -3,6 +3,7 @@ import {
   deleteKeyword,
   saveKeyword,
   saveListner,
+  savePosts,
   saveTrigger,
   updateAutomationName,
 } from "@/actions/automations";
@@ -13,7 +14,6 @@ import useZodForm from "./use-zod-form";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { TRIGGER } from "@/redux/slices/automation";
-import { savePosts } from "./use-query";
 
 export const useCreateAutomation = () => {
   const { mutate, isPending } = useMutationData(

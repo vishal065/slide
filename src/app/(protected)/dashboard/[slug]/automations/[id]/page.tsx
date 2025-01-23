@@ -1,4 +1,5 @@
 import { getAutomationInfo } from "@/actions/automations";
+import PostNode from "@/components/global/automations/post/node";
 import ThenNode from "@/components/global/automations/then/node";
 import Trigger from "@/components/global/automations/trigger";
 import AutomationBreadCrumb from "@/components/global/bread-crumbs/automation-bread-curmb";

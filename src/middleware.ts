@@ -5,8 +5,8 @@ const isProtectedRoutes = createRouteMatcher([
   "/api/payment(.*)",
   "/callback(.*)",
 ]);
-export default clerkMiddleware(async(auth,req)=>{
-    if (isProtectedRoutes(req)) await auth.protect()
+export default clerkMiddleware(async (auth, req) => {
+  if (isProtectedRoutes(req)) await auth.protect();
 });
 
 export const config = {
@@ -17,4 +17,3 @@ export const config = {
     "/(api|trpc)(.*)",
   ],
 };
- 

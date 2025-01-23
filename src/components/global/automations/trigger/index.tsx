@@ -19,21 +19,11 @@ const Trigger = ({ id }: Props) => {
   const { types, onSetTrigger, onSaveTrigger, isPending } = useTriggers(id);
 
   const { data } = useQueryAutomation(id);
-  console.log("trigger data is", data.data);
+  // console.log("trigger data is", data.data);
 
   if (data?.data && data?.data?.trigger?.length > 0) {
     return (
       <div className="flex flex-col gap-y-6 items-center">
-        {/* <ActiveTrigger
-          type={"COMMENT"}
-          keywords={[
-            {
-              id: "dabjkdbwk",
-              word: "getstarted",
-              automationId: id,
-            },
-          ]}
-        /> */}
         <ActiveTrigger
           type={data.data.trigger[0].type}
           keywords={data.data?.Keywords}
@@ -49,16 +39,6 @@ const Trigger = ({ id }: Props) => {
                 className="border-muted border-[1px]"
               />
             </div>
-            {/* <ActiveTrigger
-              type={"COMMENT"}
-              keywords={[
-                {
-                  id: "dabjkdbwk",
-                  word: "getstarted",
-                  automationId: id,
-                },
-              ]}
-            /> */}
             <ActiveTrigger
               type={data.data.trigger[1].type}
               keywords={data.data?.Keywords}

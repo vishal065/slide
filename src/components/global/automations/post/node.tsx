@@ -1,3 +1,4 @@
+"use client";
 import { Separator } from "@/components/ui/separator";
 import { useQueryAutomation } from "@/hooks/use-query";
 import { InstagramBlue, Warning } from "@/icons";
