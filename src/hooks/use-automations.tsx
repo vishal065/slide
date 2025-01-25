@@ -105,31 +105,22 @@ export const useTriggers = (id: string) => {
 };
 
 export const useKeywords = (id: string) => {
-  const [keyword, setKeyword] = useState<{
-    keyword: string;
-    error: boolean;
-  }>({ keyword: "", error: false });
-  const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const keyword = e.target.value;
-    if (keyword.trim() !== "") setKeyword((prev) => ({ ...prev, keyword }));
-    else {
-      setKeyword((prev) => ({ ...prev, error: true }));
-    }
-  };
+  const [keyword, setKeyword] = useState("");
+
+  const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setKeyword(e.target.value);
 
   const { mutate } = useMutationData(
     ["add-keyword"],
-    (data: { keyword: { keyword: string } }) =>
-      saveKeyword(id, data.keyword.keyword),
+    (data: { keyword: string }) => saveKeyword(id, data.keyword),
     "automation-info",
-
-    () => setKeyword({ keyword: "", error: false })
+    () => setKeyword("")
   );
 
   const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       mutate({ keyword });
-      setKeyword({ keyword: "", error: false });
+      setKeyword("");
     }
   };
 

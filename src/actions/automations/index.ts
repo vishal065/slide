@@ -105,6 +105,9 @@ export const saveTrigger = async (automationId: string, trigger: string[]) => {
 export const saveKeyword = async (automationId: string, keyword: string) => {
   await onCurrentUser();
   try {
+    if (keyword.trim() === "")
+      return { status: 404, data: "keyword cannot be empty" };
+
     const create = await addKeyWord(automationId, keyword);
     if (create) return { status: 200, data: "Keyword added successfully" };
     return { status: 404, data: "Cannot add keyword" };
