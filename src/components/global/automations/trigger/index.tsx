@@ -19,7 +19,6 @@ const Trigger = ({ id }: Props) => {
   const { types, onSetTrigger, onSaveTrigger, isPending } = useTriggers(id);
 
   const { data } = useQueryAutomation(id);
-  // console.log("trigger data is", data.data);
 
   if (data?.data && data?.data?.trigger?.length > 0) {
     return (

@@ -5,8 +5,6 @@ import { TRIGGER_TYPE } from "@prisma/client";
 
 export const createAutomation = async (clerkId: string, data) => {
   try {
-    console.log("before insrted in db", data);
-
     const abc = await client.user.update({
       where: {
         clerkId,
@@ -24,11 +22,10 @@ export const createAutomation = async (clerkId: string, data) => {
         },
       },
     });
-    console.log("before retrurn from db", abc);
 
     return abc;
   } catch (error) {
-    console.log("databaseError", error);
+    console.error("databaseError", error);
   }
 };
 
@@ -136,7 +133,7 @@ export const addKeyWord = async (automationId: string, keyword: string) => {
     data: {
       Keywords: {
         create: {
-          word: keyword,
+          word: keyword.trim(),
         },
       },
     },

@@ -23,7 +23,7 @@ export const findUser = async (clerkId: string) => {
     });
     return existingUser;
   } catch (error) {
-    console.log("error in findUser", error);
+    console.error("error in findUser", error);
   }
 };
 

@@ -10,6 +10,9 @@ type Props = {
 };
 
 const ActiveTrigger = ({ keywords, type }: Props) => {
+  console.log("keyword", keywords);
+  console.log("types active trigger", type);
+
   return (
     <div className="bg-background-80 p-3 rounded-xl w-full">
       <div className="flex gap-x-2 items-center">

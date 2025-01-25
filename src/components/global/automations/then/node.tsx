@@ -10,6 +10,8 @@ type Props = {
 
 const ThenNode = ({ id }: Props) => {
   const { data } = useQueryAutomation(id);
+  console.log("then node", data?.data?.listner);
+
   const commentTrigger = data?.data?.trigger.find((t) => t.type === "COMMENT");
 
   return !data?.data?.listner ? (

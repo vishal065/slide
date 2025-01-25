@@ -18,28 +18,30 @@ type Props = {
 
 //WIP : Set some metadata
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const info = await getAutomationInfo(params.id);
+  const { id } = await params;
+  const info = await getAutomationInfo(id);
   return { title: info.data?.name };
 }
 
 const Page = async ({ params }: Props) => {
+  const { id } = await params;
   //WIP : pre-fetch user automation data
   const query = new QueryClient();
 
-  await preFetchUserAutomation(query, params.id);
+  await preFetchUserAutomation(query, id);
   return (
     <HydrationBoundary state={dehydrate(query)}>
       <div className="flex flex-col items-center gap-y-20">
-        <AutomationBreadCrumb id={params.id} />
+        <AutomationBreadCrumb id={id} />
         <div className="w-full lg:w-10/12 xl:w-6/12 p-5 rounded-xl flex flex-col bg-[#1D1D1D] gap-y-3">
           <div className="flex gap-x-2">
             <Warning />
             When...
           </div>
-          <Trigger id={params.id} />
+          <Trigger id={id} />
         </div>
-        <ThenNode id={params.id} />
-        <PostNode id={params.id} />
+        <ThenNode id={id} />
+        <PostNode id={id} />
       </div>
     </HydrationBoundary>
   );

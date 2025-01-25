@@ -15,11 +15,8 @@ export const onCurrentUser = async () => {
 export const onBoardUser = async () => {
   const user = await onCurrentUser();
   try {
-    // console.log("user is ", user);
-    console.log("user id is ", user.id);
-
     const existingUser = await findUser(user?.id);
-    console.log("existingUser is ", existingUser);
+
     if (existingUser) {
       //when we integrating the user insta account there something call refresh access token and this token will always refresh based on certain span of time for this case we do for 5 days
       if (existingUser?.Integrations?.length > 0) {

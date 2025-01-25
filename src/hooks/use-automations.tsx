@@ -89,8 +89,9 @@ export const useTriggers = (id: string) => {
     (state) => state.AutomationReducer.trigger?.types
   );
   const dispatch: AppDispatch = useDispatch();
-  const onSetTrigger = (type: "COMMENT" | "DM") =>
-    dispatch(TRIGGER({ trigger: { type } }));
+  const onSetTrigger = (types: "COMMENT" | "DM") => {
+    dispatch(TRIGGER({ trigger: { types } }));
+  };
 
   const { isPending, mutate } = useMutationData(
     ["add-trigger"],
@@ -104,21 +105,31 @@ export const useTriggers = (id: string) => {
 };
 
 export const useKeywords = (id: string) => {
-  const [keyword, setKeyword] = useState("");
-  const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setKeyword(e.target.value);
+  const [keyword, setKeyword] = useState<{
+    keyword: string;
+    error: boolean;
+  }>({ keyword: "", error: false });
+  const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const keyword = e.target.value;
+    if (keyword.trim() !== "") setKeyword((prev) => ({ ...prev, keyword }));
+    else {
+      setKeyword((prev) => ({ ...prev, error: true }));
+    }
+  };
 
   const { mutate } = useMutationData(
     ["add-keyword"],
-    (data: { keyword: string }) => saveKeyword(id, data.keyword),
+    (data: { keyword: { keyword: string } }) =>
+      saveKeyword(id, data.keyword.keyword),
     "automation-info",
-    () => setKeyword("")
+
+    () => setKeyword({ keyword: "", error: false })
   );
 
   const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       mutate({ keyword });
-      setKeyword("");
+      setKeyword({ keyword: "", error: false });
     }
   };
 

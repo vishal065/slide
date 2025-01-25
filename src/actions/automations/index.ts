@@ -1,6 +1,7 @@
 "use server";
 
 import { onCurrentUser } from "../user";
+import { findUser } from "../user/queries";
 import {
   addKeyWord,
   addListner,

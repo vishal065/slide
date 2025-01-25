@@ -26,7 +26,7 @@ export const getMonth = (month: number) => {
   return months[month - 1];
 };
 
-export const duplicateValidation = (arr: string[], el: string) => {
+export const duplicateValidation = (arr: string[], el: string): string[] => {
   if (!arr.find((t) => t === el)) {
     arr.push(el);
     return arr;
