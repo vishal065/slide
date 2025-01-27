@@ -46,7 +46,6 @@ const Trigger = ({ id }: Props) => {
         )}
 
         {!data.data.listner && <ThenAction id={id} />}
-        {/* <ThenAction id={id} /> */}
       </div>
     );
   }

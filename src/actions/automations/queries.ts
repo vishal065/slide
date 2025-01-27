@@ -1,7 +1,7 @@
 "use server";
 
 import { client } from "@/lib/prisma";
-import { TRIGGER_TYPE } from "@prisma/client";
+
 
 export const createAutomation = async (clerkId: string, data) => {
   try {
@@ -86,6 +86,7 @@ export const addListner = async (
     data: {
       listner: {
         create: {
+          automationId,
           listener,
           prompt,
           commentReply: reply,
@@ -155,7 +156,7 @@ export const addPost = async (
     caption?: string;
     media: string;
     mediaType: "IMAGE" | "VIDEO" | "CAROSEL_ALBUM";
-  }
+  }[]
 ) => {
   return await client.automation.update({
     where: {

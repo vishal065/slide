@@ -8,5 +8,5 @@ export const SubscriptionPlan = ({ children, type }: Props) => {
   //WIP: Return subscription of user
   const { data } = useQueryUser();
 
-  return data?.data?.subscription?.plan === type && children;
+  return data?.data?.Subscription?.plan === type && children;
 };

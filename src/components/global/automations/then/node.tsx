@@ -10,7 +10,6 @@ type Props = {
 
 const ThenNode = ({ id }: Props) => {
   const { data } = useQueryAutomation(id);
-  console.log("then node", data?.data?.listner);
 
   const commentTrigger = data?.data?.trigger.find((t) => t.type === "COMMENT");
 
@@ -39,7 +38,7 @@ const ThenNode = ({ id }: Props) => {
           )}
           <p className="text-lg">
             {data.data.listner.listener === "MESSAGE"
-              ? "Send the user a message"
+              ? `${data.data.listner.listener}`
               : "Let SmartAI takeover"}
           </p>
         </div>

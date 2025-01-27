@@ -26,9 +26,13 @@ model User {
 }
 
 model Subscription {
-  id     String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId String? @unique @db.Uuid
-  User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  User       User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String?           @unique @db.Uuid
+  createdAt  DateTime          @default(now())
+  plan       SUBSCRIPTION_PLAN @default(FREE)
+  updatedAt  DateTime          @default(now())
+  customerId String?           @unique
 }
 
 //Integrations is an social media account (instagram)
@@ -51,7 +55,7 @@ model Automation {
   active    Boolean   @default(false)
   createdAt DateTime  @default(now())
   User      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  listner   Listner?  @relation(fields: [listnerId], references: [id])
+  listner   Listner?  @relation(fields: [listnerId], references: [id], onDelete: Cascade)
   trigger   Trigger[]
   Dms       Dms[]
   Posts     Post[]

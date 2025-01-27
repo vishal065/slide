@@ -153,7 +153,7 @@ export const savePosts = async (
     caption?: string;
     media: string;
     mediaType: "IMAGE" | "VIDEO" | "CAROSEL_ALBUM";
-  }
+  }[]
 ) => {
   await onCurrentUser();
   try {
