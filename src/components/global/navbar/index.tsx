@@ -25,7 +25,8 @@ const Navbar = ({ slug }: Props) => {
   const currentPage = PAGE_BREAD_CRUMBS.includes(page) || page === slug;
   return (
     currentPage && (
-      <div className="flex flex-col">
+      <div className="flex flex-col  ">
+        hello
         <div className="flex gap-x-3 lg:gap-x-5 justify-end">
           <span className="lg:hidden flex items-center flex-1 gap-x-2">
             <CustomSheet side="left" trigger={<Menu />} className="lg:hidden">
@@ -49,9 +50,10 @@ const Navbar = ({ slug }: Props) => {
                   </div>
                   <div className="flex gap-x-3">
                     <HelpDuoToneWhite />
-                    <p className="text-[#9B9CA0]">Help</p>
+                    <p className="text-[#9B9CA0]">Help123</p>
                   </div>
-                </div>
+                    
+                    </div>
                 <SubscriptionPlan type="FREE">
                   <div className="flex-1 flex flex-col justify-end">
                     <UpgradeCard />

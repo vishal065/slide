@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import PaymentCard from "./payment-card";
 import { useQueryUser } from "@/hooks/use-query";
 
