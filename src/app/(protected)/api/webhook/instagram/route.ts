@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import {
   createChatHistory,
+  getChatHistory,
   getKeywordAutomation,
   getKeywordPost,
   matchKeyword,
@@ -195,7 +196,9 @@ export async function POST(req: NextRequest) {
         webhook_payload.entry[0].messaging[0].sender.id
       );
       if (customer_history.history.length > 0) {
-        const automation = await findAutomation(customer_history.automationId);
+        const automation = await findAutomation(
+          customer_history.automationId as string
+        );
         if (
           automation?.User?.Subscription?.plan === "PRO" &&
           automation.listner?.listener === "SMARTAI"
@@ -207,7 +210,7 @@ export async function POST(req: NextRequest) {
                 role: "assistant",
                 content: `${automation.listner.prompt}: keep the responses under 2 sentences`,
               },
-              ...createChatHistory.history,
+              ...customer_history.history,
               {
                 role: "user",
                 content: webhook_payload.entry[0].messaging[0].message.text,
@@ -245,18 +248,18 @@ export async function POST(req: NextRequest) {
       }
       return NextResponse.json(
         { message: "No automation set" },
-        { status: 404 }
+        { status: 200 }
       );
     }
     return NextResponse.json(
       { message: "No automation set -1" },
-      { status: 404 }
+      { status: 200 }
     );
   } catch (error) {
     console.error(error);
     return NextResponse.json(
       { message: "No automation set -2" },
-      { status: 500 }
+      { status: 200 }
     );
   }
 }

@@ -107,3 +107,33 @@ export const getKeywordPost = async (postId: string, automationId: string) => {
     },
   });
 };
+
+export const getChatHistory = async (sender: string, reciever: string) => {
+  const history = await client.dms.findMany({
+    where: {
+      AND: [{ senderId: sender }, { reciever }],
+    },
+    orderBy: {
+      createdAt: "asc",
+    },
+  });
+
+  // If history is empty, return a default response
+  if (history.length === 0) {
+    return {
+      history: [],
+      automationId: null, // or some default value
+    };
+  }
+
+  const chatSession: { role: "assistant" | "user",content: string }[] = history?.map((chat) => {
+    return {
+      role: chat.reciever ? "assistant" : "user",
+      content: chat.message!,
+    };
+  });
+  return {
+    history: chatSession,
+    automationId: history[history.length - 1].automationId,
+  };
+};
