@@ -96,3 +96,14 @@ export const createChatHistory = (
     },
   });
 };
+
+export const getKeywordPost = async (postId: string, automationId: string) => {
+  return await client.post.findFirst({
+    where: {
+      AND: [{ postid: postId }, { automationId }],
+    },
+    select: {
+      automationId: true,
+    },
+  });
+};
